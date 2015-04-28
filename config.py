@@ -1,9 +1,10 @@
 import os
+from secrets import user, password, key_secret
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'hard to guess string')
+    SECRET_KEY = os.environ.get('SECRET_KEY', key_secret)
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True  # enable auto commit after request
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
@@ -14,7 +15,7 @@ class Config(object):
     FLASKY_MAIL_SENDER = 'Dashboard Admin <dashboard@example.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
 
-    SQLALCHEMY_DATABASE_URI = 'mysql://localhost/dashboard'
+    SQLALCHEMY_DATABASE_URI = 'mysql://'+user+':'+password+'@localhost/dashboard'
 
 
     @staticmethod
@@ -23,7 +24,7 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://localhost/dashboard'
+    SQLALCHEMY_DATABASE_URI = 'mysql://'+user+':'+password+'@localhost/dashboard'
 
 
 class DevelopmentConfig(Config):
